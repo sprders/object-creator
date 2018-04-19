@@ -1,0 +1,40 @@
+apply plugin: 'maven'
+apply plugin: 'java'
+
+group 'com.github.sprders'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives sourcesJar
+    archives javadocJar
+}
+dependencies {
+}
+install {
+    repositories.mavenInstaller {
+        pom.project {
+            licenses {
+                license {
+                    name 'GNU General Public License v3.0'
+                    url 'https://www.gnu.org/licenses/gpl-3.0.txt'
+//                    distribution 'repo'
+                }
+            }
+        }
+    }
+}
